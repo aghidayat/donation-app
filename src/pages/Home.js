@@ -239,10 +239,10 @@ function Home() {
                                                 communications from TNC Hong
                                                 Kong, including my donation
                                                 receipt.{' '}
-                                                <a href='#'>
+                                                <button className='btn btn-link'>
                                                     Click here for more
                                                     details...
-                                                </a>
+                                                </button>
                                             </label>
                                         </div>
                                     </form>
@@ -301,21 +301,43 @@ function Home() {
                                             aria-controls='panel3a-content'
                                             id='panel3a-header'
                                         >
-                                            <Typography>Debit Card (ATM Card)</Typography>
+                                            <Typography>
+                                                Debit Card (ATM Card)
+                                            </Typography>
                                         </AccordionSummary>
                                         <AccordionDetails>
                                             <div>
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <div className="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" />
-                                                            <label className="custom-control-label" for="customRadio1">Jenius</label>
+                                                <div className='row'>
+                                                    <div className='col-md-6'>
+                                                        <div className='custom-control custom-radio'>
+                                                            <input
+                                                                type='radio'
+                                                                id='customRadio1'
+                                                                name='customRadio'
+                                                                className='custom-control-input'
+                                                            />
+                                                            <label
+                                                                className='custom-control-label px-3 label-payments'
+                                                                for='customRadio1'
+                                                            >
+                                                                Jenius
+                                                            </label>
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-6">
-                                                        <div className="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio2" name="customRadio" className="custom-control-input" />
-                                                            <label className="custom-control-label" for="customRadio2">Bank BRI</label>
+                                                    <div className='col-md-6'>
+                                                        <div className='custom-control custom-radio'>
+                                                            <input
+                                                                type='radio'
+                                                                id='customRadio2'
+                                                                name='customRadio'
+                                                                className='custom-control-input'
+                                                            />
+                                                            <label
+                                                                className='custom-control-label px-3 label-payments'
+                                                                for='customRadio2'
+                                                            >
+                                                                Bank BRI
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>

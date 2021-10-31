@@ -19,3 +19,12 @@ body {
 .items-active:hover {
     cursor: pointer !important;
 }
+
+input[type=radio] {
+    width: 16px;
+    height: 16px;
+}
+
+.label-payments {
+    font-size: 18px !important;
+}
