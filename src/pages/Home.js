@@ -69,21 +69,43 @@ function Home() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleFinish = () => {
-        let data = JSON.parse(localStorage.getItem('data')) || [];
-        let newData = {
-            id: activeData.id,
-            name: biodata.firstname + ' ' + biodata.lastname,
-            title: activeData.title,
-            amount: amount === 0 ? activeData.price : amount,
-            payment_channel: biodata.payment_channel,
-            donation: activeData,
-            biodata: biodata
-        };
-        data.push(newData);
+    const handleFinish = async () => {
+        // let data = JSON.parse(localStorage.getItem('data')) || [];
+        // let newData = {
+        //     id: activeData.id,
+        //     name: biodata.firstname + ' ' + biodata.lastname,
+        //     title: activeData.title,
+        //     amount: amount === 0 ? activeData.price : amount,
+        //     payment_channel: biodata.payment_channel,
+        //     donation: activeData,
+        //     biodata: biodata
+        // };
+        // data.push(newData);
 
-        localStorage.setItem('data', JSON.stringify(data));
-        window.location.href = '/results';
+        // localStorage.setItem('data', JSON.stringify(data));
+        // window.location.href = '/results';
+
+        const Xendit = require('xendit-node');
+        const x = new Xendit({
+            secretKey:
+                'xnd_development_q9F8uv2g3IkUKe2tGqgxZRmBipufboFnNiIyvB1zi2XGla4aU5vcUyjFy9nSDaHa',
+        });
+
+        console.log(x);
+
+        const { Invoice } = x;
+        const invoiceSpecificOptions = {};
+        const i = new Invoice(invoiceSpecificOptions);
+
+        i.createInvoice({
+            externalID: 'your-external-id',
+            payerEmail: 'stanley@xendit.co',
+            description: 'Invoice for Shoes Purchase',
+            amount: 100000,
+        }).then(({ id }) => {
+            console.log(`Invoice created with ID: ${id}`);
+        });
+
     }
 
     const handleSetItem = (data) => {
