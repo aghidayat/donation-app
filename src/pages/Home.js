@@ -51,7 +51,6 @@ function Home() {
     const [biodata, setBiodata] = React.useState({});
     const [amount, setAmount] = React.useState(0);
     const [expanded, setExpanded] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
