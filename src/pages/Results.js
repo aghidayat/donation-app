@@ -12,7 +12,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
 const columns = [
-    { id: 'number', label: 'No'},
+    { id: 'number', label: 'No' },
     { id: 'name', label: 'Name', minWidth: 170 },
     {
         id: 'title',
@@ -26,88 +26,19 @@ const columns = [
         align: 'right',
         format: (value) => value.toFixed(2),
     },
+    {
+        id: 'payment_channel',
+        label: 'Payment Channel',
+    },
 ];
 
-function createData(number, name, title, amount) {
-    return { number, name, title, amount };
+function createData(number, name, title, amount, payment_channel) {
+    return { number, name, title, amount, payment_channel };
 }
 
-const datas = [
-    {
-        id: 1,
-        name: 'Adi Gunawan',
-        title: 'Patungan 10k',
-        amount: 10000
-    },
-    {
-        id: 2,
-        name: 'Adi',
-        title: 'Patungan 30k',
-        amount: 30000
-    },
-    {
-        id: 3,
-        name: 'Gunawan',
-        title: 'Patungan 15k',
-        amount: 15000
-    },
-    {
-        id: 4,
-        name: 'Hidayat Gunawan',
-        title: 'Patungan 20k',
-        amount: 20000
-    },
-    {
-        id: 1,
-        name: 'Adi Gunawan',
-        title: 'Patungan 10k',
-        amount: 10000
-    },
-    {
-        id: 2,
-        name: 'Adi',
-        title: 'Patungan 30k',
-        amount: 30000
-    },
-    {
-        id: 3,
-        name: 'Gunawan',
-        title: 'Patungan 15k',
-        amount: 15000
-    },
-    {
-        id: 4,
-        name: 'Hidayat Gunawan',
-        title: 'Patungan 20k',
-        amount: 20000
-    },
-    {
-        id: 1,
-        name: 'Adi Gunawan',
-        title: 'Patungan 10k',
-        amount: 10000
-    },
-    {
-        id: 2,
-        name: 'Adi',
-        title: 'Patungan 30k',
-        amount: 30000
-    },
-    {
-        id: 3,
-        name: 'Gunawan',
-        title: 'Patungan 15k',
-        amount: 15000
-    },
-    {
-        id: 4,
-        name: 'Hidayat Gunawan',
-        title: 'Patungan 20k',
-        amount: 20000
-    },
-]
+const datas = JSON.parse(localStorage.getItem('data'));
 
-const rows = datas && datas.map((data, index) => createData(index + 1, data.name, data.title, data.amount));
+const rows = datas && datas.map((data, index) => createData(index + 1, data.name, data.title, data.amount, data.payment_channel));
 
 export default function Results() {
 

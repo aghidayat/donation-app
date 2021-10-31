@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -47,13 +46,12 @@ const datas = [
 
 function Home() {
 
-    const history = useHistory();
-
     const [activeStep, setActiveStep] = React.useState(0);
     const [activeData, setActiveData] = React.useState([]);
     const [biodata, setBiodata] = React.useState({});
     const [amount, setAmount] = React.useState(0);
     const [expanded, setExpanded] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -72,11 +70,23 @@ function Home() {
     };
 
     const handleFinish = () => {
-        return history.push('/results');
+        let data = JSON.parse(localStorage.getItem('data')) || [];
+        let newData = {
+            id: activeData.id,
+            name: biodata.firstname + ' ' + biodata.lastname,
+            title: activeData.title,
+            amount: amount === 0 ? activeData.price : amount,
+            payment_channel: biodata.payment_channel,
+            donation: activeData,
+            biodata: biodata
+        };
+        data.push(newData);
+
+        localStorage.setItem('data', JSON.stringify(data));
+        window.location.href = '/results';
     }
 
     const handleSetItem = (data) => {
-        // console.log(data);
         setActiveData(data);
     }
 
@@ -317,8 +327,14 @@ function Home() {
                                                             <input
                                                                 type='radio'
                                                                 id='customRadioVisa'
-                                                                name='customRadio'
+                                                                name='payment_channel'
                                                                 className='custom-control-input'
+                                                                value={'visa'}
+                                                                onChange={(e) =>
+                                                                    handleBiodata(
+                                                                        e
+                                                                    )
+                                                                }
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
@@ -333,8 +349,16 @@ function Home() {
                                                             <input
                                                                 type='radio'
                                                                 id='customRadioMasterCard'
-                                                                name='customRadio'
+                                                                name='payment_channel'
                                                                 className='custom-control-input'
+                                                                value={
+                                                                    'master_card'
+                                                                }
+                                                                onChange={(e) =>
+                                                                    handleBiodata(
+                                                                        e
+                                                                    )
+                                                                }
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
@@ -367,8 +391,14 @@ function Home() {
                                                             <input
                                                                 type='radio'
                                                                 id='customRadioOvo'
-                                                                name='customRadio'
+                                                                name='payment_channel'
                                                                 className='custom-control-input'
+                                                                value={'ovo'}
+                                                                onChange={(e) =>
+                                                                    handleBiodata(
+                                                                        e
+                                                                    )
+                                                                }
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
@@ -383,8 +413,16 @@ function Home() {
                                                             <input
                                                                 type='radio'
                                                                 id='customRadioShopee'
-                                                                name='customRadio'
+                                                                name='payment_channel'
                                                                 className='custom-control-input'
+                                                                value={
+                                                                    'shopee_pay'
+                                                                }
+                                                                onChange={(e) =>
+                                                                    handleBiodata(
+                                                                        e
+                                                                    )
+                                                                }
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
@@ -419,8 +457,14 @@ function Home() {
                                                             <input
                                                                 type='radio'
                                                                 id='customRadio1'
-                                                                name='customRadio'
+                                                                name='payment_channel'
                                                                 className='custom-control-input'
+                                                                value={'jenius'}
+                                                                onChange={(e) =>
+                                                                    handleBiodata(
+                                                                        e
+                                                                    )
+                                                                }
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
@@ -435,8 +479,14 @@ function Home() {
                                                             <input
                                                                 type='radio'
                                                                 id='customRadio2'
-                                                                name='customRadio'
+                                                                name='payment_channel'
                                                                 className='custom-control-input'
+                                                                value={'bri'}
+                                                                onChange={(e) =>
+                                                                    handleBiodata(
+                                                                        e
+                                                                    )
+                                                                }
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
