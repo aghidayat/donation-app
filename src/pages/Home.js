@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -46,31 +47,52 @@ const datas = [
 
 function Home() {
 
+    const history = useHistory();
+
     const [activeStep, setActiveStep] = React.useState(0);
     const [activeData, setActiveData] = React.useState([]);
+    const [biodata, setBiodata] = React.useState({});
     const [amount, setAmount] = React.useState(0);
     const [expanded, setExpanded] = React.useState(false);
+
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
 
     const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        if (activeStep === 2) {
+            handleFinish();
+        } else {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    const handleFinish = () => {
+        return history.push('/results');
+    }
+
     const handleSetItem = (data) => {
-        console.log(data);
+        // console.log(data);
         setActiveData(data);
+    }
+
+    const handleBiodata = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+        setBiodata({
+            ...biodata,
+            [name]: value,
+        });
     }
   
     return (
         <div className='container'>
             <div className='row mt-4'>
-                <div className='col-md-6'>
+                <div className='col-md-12'>
                     <div className='card-header'>
                         <Stepper activeStep={activeStep}>
                             {steps.map((label, index) => {
@@ -169,6 +191,10 @@ function Home() {
                                             <select
                                                 name='type'
                                                 className='form-control'
+                                                onChange={(e) =>
+                                                    handleBiodata(e)
+                                                }
+                                                value={biodata.type}
                                             >
                                                 <option value='individual'>
                                                     Individual
@@ -183,8 +209,12 @@ function Home() {
                                                 Title
                                             </label>
                                             <select
-                                                name='type'
+                                                name='title'
                                                 className='form-control'
+                                                onChange={(e) =>
+                                                    handleBiodata(e)
+                                                }
+                                                value={biodata.title}
                                             >
                                                 <option value='Mr.'>Mr.</option>
                                                 <option value='Mrs.'>
@@ -204,6 +234,11 @@ function Home() {
                                                 <input
                                                     type='text'
                                                     className='form-control'
+                                                    name='firstname'
+                                                    onChange={(e) =>
+                                                        handleBiodata(e)
+                                                    }
+                                                    value={biodata.firstname}
                                                 />
                                             </div>
                                             <div className='form-group col-md-6'>
@@ -213,6 +248,11 @@ function Home() {
                                                 <input
                                                     type='text'
                                                     className='form-control'
+                                                    name='lastname'
+                                                    onChange={(e) =>
+                                                        handleBiodata(e)
+                                                    }
+                                                    value={biodata.lastname}
                                                 />
                                             </div>
                                         </div>
@@ -221,8 +261,13 @@ function Home() {
                                                 Email
                                             </label>
                                             <input
-                                                type='text'
+                                                type='email'
                                                 className='form-control'
+                                                name='email'
+                                                onChange={(e) =>
+                                                    handleBiodata(e)
+                                                }
+                                                value={biodata.email}
                                             />
                                         </div>
                                         <div className='form-group form-check mt-3'>
@@ -233,13 +278,16 @@ function Home() {
                                             />
                                             <label
                                                 className='form-check-label'
-                                                forHtml='exampleCheck1'
+                                                htmlFor='exampleCheck1'
                                             >
                                                 I agree to receive
                                                 communications from TNC Hong
                                                 Kong, including my donation
                                                 receipt.{' '}
-                                                <button className='btn btn-link'>
+                                                <button
+                                                    type='button'
+                                                    className='btn btn-link btn-sm'
+                                                >
                                                     Click here for more
                                                     details...
                                                 </button>
@@ -262,13 +310,42 @@ function Home() {
                                             <Typography>Credit Card</Typography>
                                         </AccordionSummary>
                                         <AccordionDetails>
-                                            <Typography>
-                                                Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit.
-                                                Suspendisse malesuada lacus ex,
-                                                sit amet blandit leo lobortis
-                                                eget.
-                                            </Typography>
+                                            <div>
+                                                <div className='row'>
+                                                    <div className='col-md-6'>
+                                                        <div className='custom-control custom-radio'>
+                                                            <input
+                                                                type='radio'
+                                                                id='customRadioVisa'
+                                                                name='customRadio'
+                                                                className='custom-control-input'
+                                                            />
+                                                            <label
+                                                                className='custom-control-label px-3 label-payments'
+                                                                htmlFor='customRadioVisa'
+                                                            >
+                                                                VISA
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-md-6'>
+                                                        <div className='custom-control custom-radio'>
+                                                            <input
+                                                                type='radio'
+                                                                id='customRadioMasterCard'
+                                                                name='customRadio'
+                                                                className='custom-control-input'
+                                                            />
+                                                            <label
+                                                                className='custom-control-label px-3 label-payments'
+                                                                htmlFor='customRadioMasterCard'
+                                                            >
+                                                                Master Card
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </AccordionDetails>
                                     </Accordion>
                                     <Accordion
@@ -283,13 +360,42 @@ function Home() {
                                             <Typography>e-Wallet</Typography>
                                         </AccordionSummary>
                                         <AccordionDetails>
-                                            <Typography>
-                                                Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit.
-                                                Suspendisse malesuada lacus ex,
-                                                sit amet blandit leo lobortis
-                                                eget.
-                                            </Typography>
+                                            <div>
+                                                <div className='row'>
+                                                    <div className='col-md-6'>
+                                                        <div className='custom-control custom-radio'>
+                                                            <input
+                                                                type='radio'
+                                                                id='customRadioOvo'
+                                                                name='customRadio'
+                                                                className='custom-control-input'
+                                                            />
+                                                            <label
+                                                                className='custom-control-label px-3 label-payments'
+                                                                htmlFor='customRadioOvo'
+                                                            >
+                                                                OVO
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-md-6'>
+                                                        <div className='custom-control custom-radio'>
+                                                            <input
+                                                                type='radio'
+                                                                id='customRadioShopee'
+                                                                name='customRadio'
+                                                                className='custom-control-input'
+                                                            />
+                                                            <label
+                                                                className='custom-control-label px-3 label-payments'
+                                                                htmlFor='customRadioShopee'
+                                                            >
+                                                                ShopeePay
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </AccordionDetails>
                                     </Accordion>
                                     <Accordion
@@ -318,7 +424,7 @@ function Home() {
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
-                                                                for='customRadio1'
+                                                                htmlFor='customRadio1'
                                                             >
                                                                 Jenius
                                                             </label>
@@ -334,7 +440,7 @@ function Home() {
                                                             />
                                                             <label
                                                                 className='custom-control-label px-3 label-payments'
-                                                                for='customRadio2'
+                                                                htmlFor='customRadio2'
                                                             >
                                                                 Bank BRI
                                                             </label>
@@ -380,7 +486,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className='col-md-6'>
+                {/* <div className='col-md-6'>
                     <div className='card'>
                         <div className='card-body'>
                             <p>
@@ -422,7 +528,7 @@ function Home() {
                             />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
