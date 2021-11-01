@@ -71,7 +71,7 @@ function Home() {
     const handleFinish = async () => {
 
         const resp = await fetch(
-            'http://localhost:3002/api/store',
+            'https://tnc-donation-api.vercel.app/api/store',
             {
                 method: 'post',
                 headers: {
