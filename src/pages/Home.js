@@ -13,7 +13,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const steps = ['AMOUNT', 'DETAILS', 'PAYMENT'];
+const steps = ['AMOUNT', 'DETAILS'];
 const datas = [
     {
         id: 1,
@@ -57,7 +57,7 @@ function Home() {
     };
 
     const handleNext = () => {
-        if (activeStep === 2) {
+        if (activeStep === steps.length - 1) {
             handleFinish();
         } else {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -71,7 +71,7 @@ function Home() {
     const handleFinish = async () => {
 
         const resp = await fetch(
-            'https://tnc-donation-api.vercel.app/api/store',
+            'http://localhost:3002/api/store',
             {
                 method: 'post',
                 headers: {
