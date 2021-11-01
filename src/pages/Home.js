@@ -73,7 +73,7 @@ function Home() {
         const resp = await fetch(
             'https://tnc-donation-api.vercel.app/api/store',
             {
-                method: 'get',
+                method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
                 },
