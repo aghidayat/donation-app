@@ -69,6 +69,26 @@ function Home() {
     };
 
     const handleFinish = async () => {
+
+        const resp = await fetch(
+            'https://tnc-donation-api.vercel.app/api/store',
+            {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    external_id: 'invoice-' + activeData.id,
+                    amount: amount === 0 ? activeData.price : amount,
+                    payer_email: biodata.email,
+                    description: activeData.title,
+                    success_redirect_url:
+                        'https://donation-app-eight.vercel.app/results',
+                }),
+            }
+        );
+        const respdata = await resp.json();
+        
         let data = JSON.parse(localStorage.getItem('data')) || [];
         let newData = {
             id: activeData.id,
@@ -82,25 +102,10 @@ function Home() {
         data.push(newData);
 
         localStorage.setItem('data', JSON.stringify(data));
-        window.location.href = '/results';
 
-        // const Xendit = require('xendit-node');
-        // const x = new Xendit({
-        //     secretKey:
-        //         'xnd_development_q9F8uv2g3IkUKe2tGqgxZRmBipufboFnNiIyvB1zi2XGla4aU5vcUyjFy9nSDaHa',
-        // });
+        window.location.href = respdata.invoice_url;
 
-        // const { Invoice } = x;
-        // const invoiceSpecificOptions = {};
-        // const i = new Invoice(invoiceSpecificOptions);
-
-        // const resp = await i.createInvoice({
-        //     externalID: 'demo_1475801962607',
-        //     amount: 230000,
-        //     payerEmail: 'sample_email@xendit.co',
-        //     description: 'Trip to Bali',
-        // });
-        // console.log(resp);
+        // window.location.href = '/results';
 
     }
 
